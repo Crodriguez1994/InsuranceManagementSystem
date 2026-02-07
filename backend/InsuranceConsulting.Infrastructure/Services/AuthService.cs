@@ -28,7 +28,7 @@ public class AuthService : IAuthService
         if (user == null)
             throw new UnauthorizedAccessException("Usuario o contraseña incorrectos");
 
-        if (user.Password != request.Password)
+        if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             throw new UnauthorizedAccessException("Usuario o contraseña incorrectos");
 
         var claims = new List<Claim>

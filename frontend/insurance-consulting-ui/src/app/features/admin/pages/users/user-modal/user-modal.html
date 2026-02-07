@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<div mat-dialog-content class="content">
+    <form [formGroup]="form" class="form">
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" [readonly]="readOnly" />
+            @if (form.controls['username'].hasError('required')) {
+            <mat-error>
+                Username is required
+            </mat-error>
+            }
+            @if (form.controls['username'].hasError('maxlength')) {
+            <mat-error>
+                Max 50 characters
+            </mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" [readonly]="readOnly" />
+            @if(!readOnly){
+            <mat-error>
+                Password is required
+            </mat-error>
+            }
+            @if(!readOnly){
+            <mat-hint>Leave empty to keep current password</mat-hint>
+            }
+
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Close</button>
+
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="readOnly">
+        Save
+    </button>
+</div>

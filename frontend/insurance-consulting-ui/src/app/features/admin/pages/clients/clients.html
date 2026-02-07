@@ -1,1 +1,3 @@
-<p>clients works!</p>
+<app-entity-grid [config]="config" [data]="rows()" (create)="openCreate()" (view)="openView($event)"
+    (edit)="openEdit($event)" (remove)="onDelete($event)">
+</app-entity-grid>
