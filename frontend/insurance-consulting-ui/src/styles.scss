@@ -36,3 +36,23 @@ body {
   height: 100%;
 }
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; background: #f6f7fb; }
+
+.mat-mdc-sidenav-container {
+  background: #f6f7fb !important;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.content-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}

@@ -1,0 +1,16 @@
+.grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric .label {
+    color: #6a7383;
+    font-size: 13px;
+}
+
+.metric .value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 6px;
+}

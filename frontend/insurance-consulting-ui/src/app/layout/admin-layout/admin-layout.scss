@@ -1,29 +1,61 @@
 .shell {
     height: 100vh;
+    background: #f6f7fb;
 }
 
 .sidenav {
-    width: 260px;
+    width: 270px;
+    border-right: 0;
+    background: linear-gradient(180deg, #0f2a5f 0%, #0b1f46 100%);
+    color: #fff;
 }
 
 .brand {
     display: flex;
-    align-items: center;
     gap: 10px;
-    padding: 16px;
-    font-weight: 600;
+    align-items: center;
+    padding: 18px 16px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+
+.brand mat-icon {
+    color: #cfe0ff;
+}
+
+::ng-deep .mat-mdc-list-base .mdc-list-item__primary-text {
+    color: rgba(255, 255, 255, .92) !important;
+}
+
+::ng-deep .mat-mdc-list-item .mat-icon {
+    color: rgba(255, 255, 255, .8) !important;
+}
+
+::ng-deep a.mat-mdc-list-item {
+    margin: 6px 10px;
+    border-radius: 12px;
+}
+
+::ng-deep a.mat-mdc-list-item:hover {
+    background: rgba(255, 255, 255, .10);
+}
+
+::ng-deep a.active {
+    background: rgba(79, 124, 255, .22) !important;
+    outline: 1px solid rgba(79, 124, 255, .35);
 }
 
 .content {
-    padding: 16px;
+    padding: 18px;
 }
 
 .spacer {
     flex: 1 1 auto;
 }
 
-a.active {
-    background: rgba(0, 0, 0, .06);
-    border-radius: 8px;
-    margin: 0 8px;
+mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
