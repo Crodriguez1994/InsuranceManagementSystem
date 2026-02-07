@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InsuranceConsulting.Application\InsuranceConsulting.Application.csproj" />
     <ProjectReference Include="..\InsuranceConsulting.Domain\InsuranceConsulting.Domain.csproj" />
   </ItemGroup>
 
