@@ -1,13 +1,16 @@
-﻿using InsuranceConsulting.Domain.Entities;
+﻿using InsuranceConsulting.Controllers;
+using InsuranceConsulting.Domain.Entities;
 using InsuranceConsulting.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace InsuranceConsulting.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class ClientsController : ControllerBase
+    public class ClientsController : ApiControllerBase
     {
         private readonly ApplicationDbContext _context;
 
@@ -49,8 +52,6 @@ namespace InsuranceConsulting.API.Controllers
 
             client.Status = true;
             client.IsDeleted = false;
-            client.CreatedDate = DateTime.Now;
-            client.UserCreated = 1; // luego vendrá del usuario logueado
 
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
@@ -76,8 +77,6 @@ namespace InsuranceConsulting.API.Controllers
             client.Email = updatedClient.Email;
             client.Age = updatedClient.Age;
             client.Status = updatedClient.Status;
-            client.ModifiedDate = DateTime.Now;
-            client.UserModified = 1;
 
             await _context.SaveChangesAsync();
 
@@ -94,8 +93,6 @@ namespace InsuranceConsulting.API.Controllers
 
             client.IsDeleted = true;
             client.Status = false;
-            client.ModifiedDate = DateTime.Now;
-            client.UserModified = 1;
 
             await _context.SaveChangesAsync();
 
