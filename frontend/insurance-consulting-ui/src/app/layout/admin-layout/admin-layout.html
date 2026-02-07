@@ -1,0 +1,45 @@
+<mat-sidenav-container class="shell">
+    <mat-sidenav mode="side" opened class="sidenav">
+        <div class="brand">
+            <mat-icon>verified_user</mat-icon>
+            <span>Insurance UI</span>
+        </div>
+
+        <mat-nav-list>
+            <a mat-list-item routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <mat-icon matListItemIcon>dashboard</mat-icon>
+                <span matListItemTitle>Dashboard</span>
+            </a>
+
+            <a mat-list-item routerLink="/admin/clients" routerLinkActive="active">
+                <mat-icon matListItemIcon>people</mat-icon>
+                <span matListItemTitle>Clients</span>
+            </a>
+
+            <a mat-list-item routerLink="/admin/insurances" routerLinkActive="active">
+                <mat-icon matListItemIcon>policy</mat-icon>
+                <span matListItemTitle>Insurances</span>
+            </a>
+
+            <a mat-list-item routerLink="/admin/users" routerLinkActive="active">
+                <mat-icon matListItemIcon>manage_accounts</mat-icon>
+                <span matListItemTitle>Users</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <span>Insurance Consulting</span>
+            <span class="spacer"></span>
+            <button mat-button (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                Logout
+            </button>
+        </mat-toolbar>
+
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
