@@ -4,6 +4,7 @@ using InsuranceConsulting.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InsuranceConsulting.API.Controllers
 {
@@ -40,6 +41,8 @@ namespace InsuranceConsulting.API.Controllers
             if (client == null)
                 return NotFound();
 
+
+
             return Ok(client);
         }
 
@@ -52,6 +55,11 @@ namespace InsuranceConsulting.API.Controllers
 
             client.Status = true;
             client.IsDeleted = false;
+
+            bool isDuplicated = await ValidateDuplicateClient(client.Identification.Trim().ToLower(), true);
+            
+            if(isDuplicated)
+                return Conflict(new { message = "Identification already exists" });
 
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
@@ -70,9 +78,15 @@ namespace InsuranceConsulting.API.Controllers
             if (client == null)
                 return NotFound();
 
+            bool isDuplicated = await ValidateDuplicateClient(client.Identification.Trim().ToLower(), false, client.Id);
+
+            if (isDuplicated)
+                return Conflict(new { message = "Identification already exists" });
+
             client.FirstName = updatedClient.FirstName;
             client.LastName = updatedClient.LastName;
             client.FullName = updatedClient.FullName;
+            client.Identification = updatedClient.Identification;
             client.Phone = updatedClient.Phone;
             client.Email = updatedClient.Email;
             client.Age = updatedClient.Age;
@@ -98,5 +112,24 @@ namespace InsuranceConsulting.API.Controllers
 
             return NoContent();
         }
+
+        private async Task<bool> ValidateDuplicateClient(string identification, bool isNew, int? clientId = null)
+        {
+            identification = identification.Trim().ToLower();
+
+            if (isNew)
+            {
+                return await _context.Clients.AnyAsync(x =>
+                    x.Identification.ToLower() == identification &&
+                    !x.IsDeleted
+                );
+            }
+            return await _context.Clients.AnyAsync(x =>
+                x.Identification.ToLower() == identification &&
+                !x.IsDeleted &&
+                x.Id != clientId
+            );
+        }
+
     }
 }

@@ -8,4 +8,5 @@ export interface Client {
   age: number;
   email?: string;
   status: boolean;
+  isDeleted: boolean;
 }

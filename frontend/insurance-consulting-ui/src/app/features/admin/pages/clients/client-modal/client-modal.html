@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<div mat-dialog-content class="content">
+    <form [formGroup]="form" class="form">
+        <mat-form-field appearance="outline">
+            <mat-label>Identification</mat-label>
+            <input matInput formControlName="identification" [readonly]="readOnly" />
+            @if (f.identification.hasError('required')) {
+            <mat-error>Required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" [readonly]="readOnly" />
+            @if (f.firstName.hasError('required')) {
+            <mat-error>Required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" [readonly]="readOnly" />
+            @if(f.lastName.hasError('required')) {
+            <mat-error>Required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" [readonly]="readOnly" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Age</mat-label>
+            <input matInput type="number" formControlName="age" [readonly]="readOnly" />
+            @if(f.age.hasError('required')) {
+            <mat-error>Required</mat-error>
+            }
+            @if(f.age.hasError('min')) {
+            <mat-error>Invalid age</mat-error>
+            }
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" [readonly]="readOnly" />
+            @if(f.email.hasError('email')) {
+            <mat-error>Invalid email</mat-error>
+            }
+
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Close</button>
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="readOnly">
+        Save
+    </button>
+</div>
