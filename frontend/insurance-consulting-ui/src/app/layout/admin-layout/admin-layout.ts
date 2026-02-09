@@ -30,7 +30,6 @@ export class AdminLayoutComponent {
 
   logout() {
     this.auth.logout();
-    // lo redirigimos en el siguiente paso con Router
     location.href = '/login';
   }
 }

@@ -4,9 +4,9 @@ using InsuranceConsulting.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace InsuranceConsulting.API.Controllers
+
+namespace InsuranceConsulting.Controllers
 {
     [Authorize]
     [ApiController]

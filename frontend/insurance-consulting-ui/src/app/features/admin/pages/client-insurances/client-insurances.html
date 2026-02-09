@@ -1,0 +1,39 @@
+<h2 class="page-title">Client - Insurance Assignment</h2>
+
+<form class="content-card" [formGroup]="form">
+    <div class="row">
+        <mat-form-field appearance="outline" class="client">
+            <mat-label>Client</mat-label>
+
+            <mat-select formControlName="clientId" (selectionChange)="onClientChange()">
+                <mat-option *ngFor="let c of clientsList" [value]="c.id">
+                    {{ c.identification }} - {{ c.fullName }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="button" (click)="save()" [disabled]="loading() || form.invalid">
+            Save
+        </button>
+    </div>
+
+    @if (loading()) {
+    <div class="loader">
+        <mat-spinner diameter="28"></mat-spinner>
+    </div>
+    } @else {
+    <div class="list">
+        <div class="item" *ngFor="let i of insurances()">
+            <mat-checkbox [checked]="i.assigned" (change)="toggle(i, $event.checked)">
+                <b>{{ i.code }}</b> — {{ i.name }}
+            </mat-checkbox>
+        </div>
+
+        @if (form.value.clientId && insurances().length === 0) {
+        <div class="empty">
+            No insurances found.
+        </div>
+        }
+    </div>
+    }
+</form>

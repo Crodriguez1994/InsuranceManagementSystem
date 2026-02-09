@@ -29,5 +29,7 @@ namespace InsuranceConsulting.Domain.Entities
         public string? Email { get; set; }
 
         public bool IsDeleted { get; set; }
+        public ICollection<ClientInsurance> ClientInsurances { get; set; } = new List<ClientInsurance>();
+
     }
 }

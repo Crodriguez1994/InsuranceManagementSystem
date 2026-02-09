@@ -11,6 +11,11 @@
                 <span matListItemTitle>Dashboard</span>
             </a>
 
+            <a mat-list-item routerLink="/admin/users" routerLinkActive="active">
+                <mat-icon matListItemIcon>manage_accounts</mat-icon>
+                <span matListItemTitle>Users</span>
+            </a>
+
             <a mat-list-item routerLink="/admin/clients" routerLinkActive="active">
                 <mat-icon matListItemIcon>people</mat-icon>
                 <span matListItemTitle>Clients</span>
@@ -21,10 +26,12 @@
                 <span matListItemTitle>Insurances</span>
             </a>
 
-            <a mat-list-item routerLink="/admin/users" routerLinkActive="active">
-                <mat-icon matListItemIcon>manage_accounts</mat-icon>
-                <span matListItemTitle>Users</span>
+            <a mat-list-item routerLink="/admin/assignments" routerLinkActive="active">
+                <mat-icon matListItemIcon>link</mat-icon>
+                <span matListItemTitle>Assignments</span>
             </a>
+
+
         </mat-nav-list>
     </mat-sidenav>
 

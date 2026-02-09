@@ -1,8 +1,6 @@
 ﻿using InsuranceConsulting.Application.Common;
 using InsuranceConsulting.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace InsuranceConsulting.Infrastructure.Persistence
 {
@@ -19,7 +17,7 @@ namespace InsuranceConsulting.Infrastructure.Persistence
         public DbSet<User> Users => Set<User>();
         public DbSet<Client> Clients => Set<Client>();
         public DbSet<Insurance> Insurances => Set<Insurance>();
-        //public DbSet<ClientInsurance> ClientInsurances => Set<ClientInsurance>();
+        public DbSet<ClientInsurance> ClientInsurances => Set<ClientInsurance>();
 
         public override int SaveChanges()
         {
@@ -68,6 +66,20 @@ namespace InsuranceConsulting.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ClientInsurance>()
+                .HasIndex(x => new { x.ClientId, x.InsuranceId })
+                .IsUnique();
+
+            modelBuilder.Entity<ClientInsurance>()
+                .HasOne(x => x.Client)
+                .WithMany(c => c.ClientInsurances)
+                .HasForeignKey(x => x.ClientId);
+
+            modelBuilder.Entity<ClientInsurance>()
+                .HasOne(x => x.Insurance)
+                .WithMany(i => i.ClientInsurances)
+                .HasForeignKey(x => x.InsuranceId);
+
             base.OnModelCreating(modelBuilder);
 
         }

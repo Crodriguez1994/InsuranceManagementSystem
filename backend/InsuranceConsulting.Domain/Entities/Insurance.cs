@@ -15,5 +15,7 @@ namespace InsuranceConsulting.Domain.Entities
         public decimal InsuredAmount { get; set; }
 
         public decimal Price { get; set; }
+        public ICollection<ClientInsurance> ClientInsurances { get; set; } = new List<ClientInsurance>();
+
     }
 }
