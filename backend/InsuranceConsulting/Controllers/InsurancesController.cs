@@ -48,6 +48,9 @@ namespace InsuranceConsulting.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (await ValidateDuplicateInsurance(insurance.Code, true))
+                return Conflict(new { message = "Code already exists" });
+
             _context.Insurances.Add(insurance);
             await _context.SaveChangesAsync();
 
@@ -60,6 +63,10 @@ namespace InsuranceConsulting.Controllers
         {
             if (id != updated.Id)
                 return BadRequest("Id mismatch");
+
+            if (await ValidateDuplicateInsurance(updated.Code, false, id))
+                return Conflict(new { message = "Code already exists" });
+
 
             var entity = await _context.Insurances.FirstOrDefaultAsync(x => x.Id == id && x.Status);
             if (entity == null) return NotFound();
@@ -88,5 +95,17 @@ namespace InsuranceConsulting.Controllers
 
             return NoContent();
         }
+
+        private async Task<bool> ValidateDuplicateInsurance(string code, bool isNew, int? insuranceId = null)
+        {
+            code = code.Trim().ToLower();
+
+            if (isNew)
+                return await _context.Insurances.AnyAsync(x => x.Code.ToLower() == code && x.Status);
+
+            return await _context.Insurances.AnyAsync(x =>
+                x.Code.ToLower() == code && x.Status && x.Id != insuranceId);
+        }
+
     }
 }

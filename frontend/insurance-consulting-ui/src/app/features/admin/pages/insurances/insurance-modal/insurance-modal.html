@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<div mat-dialog-content class="content">
+    <form [formGroup]="form" class="form">
+        <mat-form-field appearance="outline">
+            <mat-label>Code</mat-label>
+            <input matInput formControlName="code" [readonly]="readOnly" />
+            @if (f.code.hasError('required')) {
+            <mat-error>Required</mat-error>
+            }
+            @if(f.code.hasError('maxlength')) {
+            <mat-error>Max 20 characters</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" [readonly]="readOnly" />
+            @if(f.name.hasError('required')) {
+            <mat-error>Required</mat-error>
+            }
+            @if(f.name.hasError('maxlength')) {
+            <mat-error>Max 100 characters</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Insured Amount</mat-label>
+            <input matInput type="number" formControlName="insuredAmount" [readonly]="readOnly" />
+            @if(f.insuredAmount.hasError('required')) {
+            <mat-error>Required</mat-error>
+            }
+            @if(f.insuredAmount.hasError('min')) {
+            <mat-error>Must be greater than 0</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" formControlName="price" [readonly]="readOnly" />
+            @if(f.price.hasError('required')) {
+            <mat-error>Required</mat-error>
+            }
+            @if(f.price.hasError('min')) {
+            <mat-error>Must be greater than 0</mat-error>
+            }
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Close</button>
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="readOnly">
+        Save
+    </button>
+</div>

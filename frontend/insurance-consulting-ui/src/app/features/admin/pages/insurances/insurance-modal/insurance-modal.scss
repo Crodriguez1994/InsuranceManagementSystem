@@ -1,0 +1,15 @@
+.content {
+    padding-top: 6px;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 720px) {
+    .form {
+        grid-template-columns: 1fr;
+    }
+}
