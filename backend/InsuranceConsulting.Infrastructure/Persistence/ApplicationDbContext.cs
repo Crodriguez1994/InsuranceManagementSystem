@@ -1,4 +1,5 @@
 ﻿using InsuranceConsulting.Application.Common;
+using InsuranceConsulting.Application.Dtos;
 using InsuranceConsulting.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -79,6 +80,8 @@ namespace InsuranceConsulting.Infrastructure.Persistence
                 .HasOne(x => x.Insurance)
                 .WithMany(i => i.ClientInsurances)
                 .HasForeignKey(x => x.InsuranceId);
+
+            modelBuilder.Entity<ClientInsuranceReportRow>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
 

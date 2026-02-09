@@ -2,5 +2,6 @@
   <Project Path="../InsuranceConsulting.Application/InsuranceConsulting.Application.csproj" />
   <Project Path="../InsuranceConsulting.Domain/InsuranceConsulting.Domain.csproj" />
   <Project Path="../InsuranceConsulting.Infrastructure/InsuranceConsulting.Infrastructure.csproj" />
+  <Project Path="../InsuranceConsultingReport/InsuranceConsultingReport.csproj" Id="851d75f1-2c2e-43c4-bb35-3e61fc978105" />
   <Project Path="InsuranceConsulting.csproj" />
 </Solution>

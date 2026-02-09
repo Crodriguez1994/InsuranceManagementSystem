@@ -1,0 +1,162 @@
+﻿@model InsuranceConsultingReport.Models.QuerySearchViewModel
+@{
+    ViewData["Title"] = "Insurance Consulting - Search";
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-1">Insurance Consulting</h3>
+            <p class="text-muted mb-4">Search insurances by client identification or clients by insurance code.</p>
+
+            <form method="post" asp-action="Index">
+                @Html.AntiForgeryToken()
+
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label">Search by</label>
+                        <select class="form-select" id="searchType" name="SearchType">
+                            <option value="identification" selected="@(Model.SearchType == "identification")">Identification</option>
+                            <option value="insuranceCode" selected="@(Model.SearchType == "insuranceCode")">Insurance Code</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label" id="valueLabel">Value</label>
+                        <input class="form-control" id="valueInput" name="Value" value="@Model.Value" placeholder="" />
+                    </div>
+
+                    <div class="col-md-3 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                        <button type="button" class="btn btn-outline-secondary w-100" onclick="clearSearch()">Clear</button>
+                    </div>
+                </div>
+            </form>
+
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <div class="alert alert-warning mt-3 mb-0">@Model.ErrorMessage</div>
+            }
+        </div>
+    </div>
+
+    @* Results *@
+    @if (Model.Client != null)
+    {
+        <div class="card shadow-sm mt-3">
+            <div class="card-body">
+                <h5 class="mb-1">Client</h5>
+                <div class="text-muted mb-3">@Model.Client.Identification — @Model.Client.FullName</div>
+
+                <h5 class="mb-2">Insurances</h5>
+
+                @if (Model.Insurances.Count == 0)
+                {
+                    <div class="text-muted">No insurances assigned.</div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th class="text-end">Insured Amount</th>
+                                    <th class="text-end">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in Model.Insurances)
+                                {
+                                    <tr>
+                                        <td>@i.Code</td>
+                                        <td>@i.Name</td>
+                                        <td class="text-end">@i.InsuredAmount</td>
+                                        <td class="text-end">@i.Price</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <a class="btn btn-outline-danger mt-2"
+                       href="@($"{ViewBag.ApiBaseUrl}/api/reports/clients-insurances/pdf?identification={Uri.EscapeDataString(Model.Value)}")"
+                       target="_blank">
+                        Generate PDF
+                    </a>
+                }
+            </div>
+        </div>
+    }
+
+    @if (Model.Insurance != null)
+    {
+        <div class="card shadow-sm mt-3">
+            <div class="card-body">
+                <h5 class="mb-1">Insurance</h5>
+                <div class="text-muted mb-3">@Model.Insurance.Code — @Model.Insurance.Name</div>
+
+                <h5 class="mb-2">Clients</h5>
+
+                @if (Model.Clients.Count == 0)
+                {
+                    <div class="text-muted">No clients assigned.</div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Identification</th>
+                                    <th>Full Name</th>
+                                    <th>Phone</th>
+                                    <th class="text-end">Age</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var c in Model.Clients)
+                                {
+                                    <tr>
+                                        <td>@c.Identification</td>
+                                        <td>@c.FullName</td>
+                                        <td>@(c.Phone ?? "-")</td>
+                                        <td class="text-end">@c.Age</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <a class="btn btn-outline-danger mt-2"
+                       href="@($"{ViewBag.ApiBaseUrl}/api/reports/clients-insurances/pdf?insuranceCode={Uri.EscapeDataString(Model.Value)}")"
+                       target="_blank">
+                        Generate PDF
+                    </a>
+
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    function applyDynamicInput() {
+        const type = document.getElementById('searchType').value;
+        const input = document.getElementById('valueInput');
+
+        if (type === 'identification') {
+            input.placeholder = 'Enter identification (e.g. 0999999999)';
+        } else {
+            input.placeholder = 'Enter insurance code (e.g. ABC-001)';
+        }
+    }
+
+    function clearSearch() {
+        document.getElementById('valueInput').value = '';
+    }
+
+    document.getElementById('searchType').addEventListener('change', applyDynamicInput);
+    applyDynamicInput();
+</script>
